@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   airflow-webserver:
     image: apache/airflow:2.9.0
@@ -10,15 +9,27 @@ services:
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USERNAME:$DB_PASSWORD@$DB_HOST_DOCKER:$DB_PORT/$DB_NAME
       - AIRFLOW__WEBSERVER__RBAC=True
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NESTJS_API_URL=${NESTJS_API_URL}
+      - PET_ID=${PET_ID}
+      - EMAIL_RECIPIENT=${EMAIL_RECIPIENT}
+      - EMAIL_SENDER=${EMAIL_SENDER}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
     ports:
-      - "8080:8080"
+      - '8080:8080'
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./package:/opt/package
+
     command: webserver
+    entrypoint: /bin/bash -c "pip install -r /opt/package/requirements.txt && airflow webserver -p 8080"
     extra_hosts:
-      - "$DB_HOST_DOCKER:host-gateway"
+      - '$DB_HOST_DOCKER:host-gateway'
 
   airflow-scheduler:
     image: apache/airflow:2.9.0
@@ -29,13 +40,25 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USERNAME:$DB_PASSWORD@$DB_HOST_DOCKER:$DB_PORT/$DB_NAME
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NESTJS_API_URL=${NESTJS_API_URL}
+      - PET_ID=${PET_ID}
+      - EMAIL_RECIPIENT=${EMAIL_RECIPIENT}
+      - EMAIL_SENDER=${EMAIL_SENDER}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./package:/opt/package
+    entrypoint: /bin/bash -c "pip install -r /opt/package/requirements.txt && airflow scheduler"
+
     command: scheduler
     extra_hosts:
-      - "$DB_HOST_DOCKER:host-gateway"
+      - '$DB_HOST_DOCKER:host-gateway'
 
   airflow-init:
     image: apache/airflow:2.9.0
@@ -44,7 +67,7 @@ services:
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USERNAME:$DB_PASSWORD@$DB_HOST_DOCKER:$DB_PORT/$DB_NAME
     entrypoint: /bin/bash -c "airflow db init && airflow users create --username admin --firstname admin --lastname admin --role Admin --email admin@admin.com --password admin"
     extra_hosts:
-      - "$DB_HOST_DOCKER:host-gateway"
+      - '$DB_HOST_DOCKER:host-gateway'
 
 volumes:
   postgres-db-volume:

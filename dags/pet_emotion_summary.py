@@ -7,29 +7,33 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import psycopg2  # PostgreSQL library
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # OpenAI configuration
-OPENAI_API_KEY = "your_openai_api_key"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = OPENAI_API_KEY
 
 # NestJS API configuration
-PET_ID = "129c658c-876a-4118-8987-c766d32651e9"
-NESTJS_API_URL = "http://127.0.0.1:3000/pet-emotion/" + PET_ID
+PET_ID = os.getenv("PET_ID", "129c658c-876a-4118-8987-c766d32651e9")
+NESTJS_API_URL = f"{os.getenv('NESTJS_API_URL')}/pet-emotion/{PET_ID}"
 
 # Email configuration
-EMAIL_RECIPIENT = "your_email@example.com"
-EMAIL_SENDER = "your_sender_email@example.com"
-SMTP_SERVER = "smtp.example.com"  # Replace with your SMTP server
-SMTP_PORT = 587  # Replace with your SMTP port (587 for TLS)
-SMTP_USERNAME = "your_smtp_username"
-SMTP_PASSWORD = "your_smtp_password"
+EMAIL_RECIPIENT = os.getenv("EMAIL_RECIPIENT")
+EMAIL_SENDER = os.getenv("EMAIL_SENDER")
+SMTP_SERVER = os.getenv("SMTP_SERVER")
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USERNAME = os.getenv("SMTP_USERNAME")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 # PostgreSQL configuration
-POSTGRES_HOST = "your_postgres_host"  # e.g., "localhost" or "your-db-host.com"
-POSTGRES_PORT = 5432  # Default PostgreSQL port
-POSTGRES_DB = "your_database_name"
-POSTGRES_USER = "your_username"
-POSTGRES_PASSWORD = "your_password"
+POSTGRES_HOST = os.getenv("DB_HOST_DOCKER", "localhost") 
+POSTGRES_PORT = int(os.getenv("DB_PORT", "5432"))
+POSTGRES_DB = os.getenv("DB_NAME")
+POSTGRES_USER = os.getenv("DB_USERNAME")
+POSTGRES_PASSWORD = os.getenv("DB_PASSWORD")
 
 default_args = {
     'owner': 'airflow',
