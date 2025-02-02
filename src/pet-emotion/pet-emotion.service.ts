@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PetEmotion } from './entities/pet-emotion.entity';
 import { CreatePetEmotionDto } from './dto/create-pet-emotion.dto';
-import { UpdatePetEmotionDto } from './dto/update-pet-emotion.dto';
 
 @Injectable()
 export class PetEmotionService {
-  create(createPetEmotionDto: CreatePetEmotionDto) {
-    return 'This action adds a new petEmotion';
+  constructor(
+    @InjectRepository(PetEmotion)
+    private emotionsRepository: Repository<PetEmotion>,
+  ) {}
+
+  async create(
+    createPetPetEmotionDto: CreatePetEmotionDto,
+  ): Promise<PetEmotion> {
+    const newPetEmotion = this.emotionsRepository.create(
+      createPetPetEmotionDto,
+    );
+    return this.emotionsRepository.save(newPetEmotion);
   }
 
-  findAll() {
-    return `This action returns all petEmotion`;
-  }
+  async findByPetId(petId: string): Promise<PetEmotion[]> {
+    const emotions = await this.emotionsRepository.find({
+      where: { pet: { id: petId } },
+      relations: ['pet'],
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} petEmotion`;
-  }
+    if (!emotions || emotions.length === 0) {
+      return [];
+    }
 
-  update(id: number, updatePetEmotionDto: UpdatePetEmotionDto) {
-    return `This action updates a #${id} petEmotion`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} petEmotion`;
+    return emotions;
   }
 }
