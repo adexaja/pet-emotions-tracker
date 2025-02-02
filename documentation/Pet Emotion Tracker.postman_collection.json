@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "52f33e36-f23c-4f6a-b584-c3c2c3ee6265",
+		"name": "Pet Emotion Tracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "164546"
+	},
+	"item": [
+		{
+			"name": "Pets",
+			"item": [
+				{
+					"name": "Create Pet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Opets\",\n    \"breed\": \"Persian\",\n    \"species\": \"Cat\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Pet",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Opets\",\n    \"breed\": \"Persian\",\n    \"species\": \"Cat\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pets/fbb18208-388c-4e63-a766-3393b92569c6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pets",
+								"fbb18208-388c-4e63-a766-3393b92569c6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Pet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Opets\",\n    \"breed\": \"Persian\",\n    \"species\": \"Cat\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pets/ce450f0d-0316-401b-bc29-442e04ad1283",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pets",
+								"ce450f0d-0316-401b-bc29-442e04ad1283"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Pets",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Pet",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pets/129c658c-876a-4118-8987-c766d32651e9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pets",
+								"129c658c-876a-4118-8987-c766d32651e9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emotions",
+			"item": [
+				{
+					"name": "Add Emotion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pet Emotions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Monitor Pet Emotion By Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions/129c658c-876a-4118-8987-c766d32651e9/2025-02-02",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions",
+								"129c658c-876a-4118-8987-c766d32651e9",
+								"2025-02-02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Monitor Pet Emotion Summary By Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions/129c658c-876a-4118-8987-c766d32651e9/2025-02-02",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions",
+								"129c658c-876a-4118-8987-c766d32651e9",
+								"2025-02-02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Emotion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Emotion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Pet Emotions",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emotion\": \"Sad\",\n    \"notes\": \"Sounds Sad when maung maung\",\n    \"intensity\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pet-emotions/5d2f94a4-b358-4efa-81e9-d487e20afa09",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet-emotions",
+								"5d2f94a4-b358-4efa-81e9-d487e20afa09"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://127.0.0.1:8080",
+			"type": "string"
+		}
+	]
+}
