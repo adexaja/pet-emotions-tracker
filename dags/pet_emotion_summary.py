@@ -18,7 +18,7 @@ openai.api_key = OPENAI_API_KEY
 
 # NestJS API configuration
 PET_ID = os.getenv("PET_ID", "129c658c-876a-4118-8987-c766d32651e9")
-NESTJS_API_URL = f"{os.getenv('NESTJS_API_URL')}/pet-emotion/{PET_ID}"
+NESTJS_API_URL = f"{os.getenv('NESTJS_API_URL')}/pet-emotions/{PET_ID}"
 
 # Email configuration
 EMAIL_RECIPIENT = os.getenv("EMAIL_RECIPIENT")
