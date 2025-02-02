@@ -14,7 +14,6 @@ load_dotenv()
 
 # OpenAI configuration
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-openai.api_key = OPENAI_API_KEY
 
 # NestJS API configuration
 PET_ID = os.getenv("PET_ID", "129c658c-876a-4118-8987-c766d32651e9")
@@ -64,6 +63,7 @@ def analyze_emotions_with_openai(emotions):
         )
 
         client = OpenAI(api_key=OPENAI_API_KEY)
+        model = "gpt-3.5-turbo"
        # Create a chat completion
         response = client.chat.completions.create(
             model=model,
