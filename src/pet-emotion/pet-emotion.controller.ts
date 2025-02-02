@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { PetEmotionService } from './pet-emotion.service';
 import { CreatePetEmotionDto } from './dto/create-pet-emotion.dto';
 
-@Controller('pet-emotion')
+@Controller('pet-emotions')
 export class PetEmotionController {
   constructor(private readonly petEmotionService: PetEmotionService) {}
 

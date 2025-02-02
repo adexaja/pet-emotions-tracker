@@ -3,8 +3,8 @@ import { BaseEntity } from '../../base.entity';
 
 @Entity('pets')
 export class Pet extends BaseEntity {
-  @Column({ name: 'name' })
-  petName: string;
+  @Column()
+  name: string;
 
   @Column()
   species: string;

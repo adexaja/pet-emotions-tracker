@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PetModule } from './pet/pet.module';
+import { PetEmotionModule } from './pet-emotion/pet-emotion.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       }),
       inject: [ConfigService],
     }),
+    PetModule,
+    PetEmotionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
