@@ -7,7 +7,7 @@ services:
       - airflow-scheduler
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USERNAME:$DB_PASSWORD@$DB_HOST_DOCKER:$DB_PORT/$DB_NAME
       - AIRFLOW__WEBSERVER__RBAC=True
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
     ports:
@@ -18,7 +18,7 @@ services:
       - ./plugins:/opt/airflow/plugins
     command: webserver
     extra_hosts:
-      - "$DB_HOST:host-gateway"
+      - "$DB_HOST_DOCKER:host-gateway"
 
   airflow-scheduler:
     image: apache/airflow:2.9.0
@@ -27,7 +27,7 @@ services:
       - airflow-init
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USERNAME:$DB_PASSWORD@$DB_HOST_DOCKER:$DB_PORT/$DB_NAME
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
     volumes:
       - ./dags:/opt/airflow/dags
@@ -35,16 +35,16 @@ services:
       - ./plugins:/opt/airflow/plugins
     command: scheduler
     extra_hosts:
-      - "$DB_HOST:host-gateway"
+      - "$DB_HOST_DOCKER:host-gateway"
 
   airflow-init:
     image: apache/airflow:2.9.0
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USERNAME:$DB_PASSWORD@$DB_HOST_DOCKER:$DB_PORT/$DB_NAME
     entrypoint: /bin/bash -c "airflow db init && airflow users create --username admin --firstname admin --lastname admin --role Admin --email admin@admin.com --password admin"
     extra_hosts:
-      - "$DB_HOST:host-gateway"
+      - "$DB_HOST_DOCKER:host-gateway"
 
 volumes:
   postgres-db-volume:
