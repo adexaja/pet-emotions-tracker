@@ -41,4 +41,12 @@ export class PetEmotionController {
   ) {
     return this.petEmotionService.update(id, updatePetEmotionDto);
   }
+  @Get('summary/:pet/:date')
+  petSummaryByDate(@Param('pet') pet: string, @Param('date') date: string) {
+    return this.petEmotionService.findPetEmotionSummaryByDate(pet, date);
+  }
+  @Get(':pet/:date')
+  petEmotionsByDate(@Param('pet') pet: string, @Param('date') date: string) {
+    return this.petEmotionService.findByPetAndDate(pet, date);
+  }
 }
