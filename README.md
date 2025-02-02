@@ -18,9 +18,9 @@ This application has the following features:
 
 ## Screenshots
 
-![1](https://github.com/adexaja/pet-emotions-tracker/assets/1.jpg)
-![2](https://github.com/adexaja/pet-emotions-tracker/assets/2.jpg)
-![3](https://github.com/adexaja/pet-emotions-tracker/assets/3.jpg)
+![1](https://github.com/adexaja/pet-emotions-tracker/blob/main/assets/1.png)
+![1](https://github.com/adexaja/pet-emotions-tracker/blob/main/assets/2.png)
+![1](https://github.com/adexaja/pet-emotions-tracker/blob/main/assets/3.png)
 
 ## Installation
 
