@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 import requests
-import openai
+from openai import OpenAI
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -63,6 +63,7 @@ def analyze_emotions_with_openai(emotions):
             "Summary:"
         )
 
+        client = OpenAI(api_key=OPENAI_API_KEY)
        # Create a chat completion
         response = client.chat.completions.create(
             model=model,
