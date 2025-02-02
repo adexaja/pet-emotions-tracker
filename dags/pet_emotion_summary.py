@@ -63,16 +63,18 @@ def analyze_emotions_with_openai(emotions):
             "Summary:"
         )
 
-        # Call OpenAI API
-        response = openai.Completion.create(
-            engine="text-davinci-003",  # Use the appropriate OpenAI model
-            prompt=prompt,
-            max_tokens=100,  # Adjust as needed
-            temperature=0.7,  # Adjust for creativity vs. accuracy
+       # Create a chat completion
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=100
         )
-
-        # Extract the summary from the OpenAI response
-        summary = response.choices[0].text.strip()
+        
+        # Extract the response text
+        summary = response.choices[0].message.content.strip()
         return summary
     except Exception as e:
         raise Exception(f"OpenAI API failed: {e}")
