@@ -2,7 +2,25 @@
 
 This is a simple application that allows you to track your pet's emotions.
 
-Log your pet's emotions and see how they change over time and analyze using AI. (Gemini)
+Log your pet's emotions and see how they change over time and analyze using AI. (OpenAI)
+
+## Features
+
+This application has the following features:
+
+- Pets
+- Emotions
+- Pet Emotion Summary
+- OpenAI API Integration
+- Apache Airflow Integration
+
+- Basically, its must be come from IoT application, in cat collar or in dog collar, so when detect changes, it logs the emotion into this API, and at 12PM we can send data to AI and send email to you, so you now know how your pet is feeling.
+
+## Screenshots
+
+![1](https://github.com/adexaja/pet-emotions-tracker/assets/1.jpg)
+![2](https://github.com/adexaja/pet-emotions-tracker/assets/2.jpg)
+![3](https://github.com/adexaja/pet-emotions-tracker/assets/3.jpg)
 
 ## Installation
 
@@ -12,7 +30,7 @@ Log your pet's emotions and see how they change over time and analyze using AI. 
 ```
 OPENAI_API_KEY=<your_openai_api_key>
 NESTJS_API_URL=<your_nestjs_api_url>
-PET_ID=<your_pet_id>
+PET_ID=<your_pet_id> (currently only support to detect 1 pet at the time per dag)
 EMAIL_RECIPIENT=<your_email_recipient>
 EMAIL_SENDER=<your_email_sender>
 SMTP_SERVER=<your_smtp_server>
@@ -38,4 +56,4 @@ DB_PASSWORD=<your_db_password>
 
 ## For further integrations
 
-- Integrate with IoT devices, so when it detects a change in the pet's emotion, it can send a log into this API, and every some hour we can send data to AI and send email to you, so you now know how your pet is feeling.
+- Integrate with IoT devices
