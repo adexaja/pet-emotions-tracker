@@ -3,8 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PetEmotionModule } from './pet-emotion/pet-emotion.module';
-import { PetModule } from './pet/pet.module';
 
 @Module({
   imports: [
@@ -22,15 +20,12 @@ import { PetModule } from './pet/pet.module';
         database: configService.get<string>('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: false,
-        migrations: ['src/database/migrations/*.ts'],
         migrationsRun: false,
         logging: true,
         strict: false,
       }),
       inject: [ConfigService],
     }),
-    PetModule,
-    PetEmotionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
