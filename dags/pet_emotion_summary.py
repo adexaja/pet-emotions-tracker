@@ -38,7 +38,7 @@ POSTGRES_PASSWORD = os.getenv("DB_PASSWORD")
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2023, 10, 1),
+    'start_date': datetime(2025, 1, 1),
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
@@ -137,7 +137,8 @@ dag = DAG(
     'pet_emotion_summary',
     default_args=default_args,
     description='A DAG to fetch, analyze, and summarize pet emotions daily',
-    schedule_interval=timedelta(days=1),
+    schedule_interval='0 12 * * *',  # Run at 12:00 PM (noon) every day
+
 )
 
 # Define tasks
