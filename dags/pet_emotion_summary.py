@@ -2,18 +2,21 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 import requests
-from openai import OpenAI
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import psycopg2  # PostgreSQL library
 import os
 from dotenv import load_dotenv
+from anthropic import Anthropic
 
 load_dotenv()
 
 # OpenAI configuration
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = Anthropic(
+    api_key=OPENAI_API_KEY, 
+)
 
 # NestJS API configuration
 PET_ID = os.getenv("PET_ID", "129c658c-876a-4118-8987-c766d32651e9")
@@ -62,26 +65,29 @@ def analyze_emotions_with_openai(emotions):
             "Summary:"
         )
 
-        client = OpenAI(api_key=OPENAI_API_KEY)
-        model = "gpt-3.5-turbo"
-       # Create a chat completion
-        response = client.chat.completions.create(
+        model = "claude-3-5-sonnet-latest"
+        # Create a chat completion
+        message = client.messages.create(
             model=model,
-            messages=[
-                {"role": "user", "content": prompt}
-            ],
+            max_tokens=1024,
             temperature=0.7,
-            max_tokens=100
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
         )
         
-        # Extract the response text
-        summary = response.choices[0].message.content.strip()
+        # Return the response text
+        summary = message.content[0].text
         return summary
     except Exception as e:
         raise Exception(f"OpenAI API failed: {e}")
 
 def store_summary_in_db(summary):
     """Store the summary in a PostgreSQL database."""
+    connection = None
     try:
         # Connect to the PostgreSQL database
         connection = psycopg2.connect(
@@ -95,10 +101,10 @@ def store_summary_in_db(summary):
 
         # Insert the summary into the database
         insert_query = """
-        INSERT INTO pet_emotion_summaries (pet_id, summary, createdAt)
-        VALUES (%s, %s, %s);
+        INSERT INTO pet_emotion_summaries (pet_id, summary)
+        VALUES (%s, %s);
         """
-        cursor.execute(insert_query, (PET_ID, summary, datetime.now()))
+        cursor.execute(insert_query, (PET_ID, summary))
 
         # Commit the transaction
         connection.commit()
@@ -126,6 +132,7 @@ def send_summary_email(summary):
         body = f"Here is the daily summary of your pet's emotions:\n\n{summary}"
         msg.attach(MIMEText(body, 'plain'))
 
+        print(SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)
         # Connect to the SMTP server and send the email
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()  # Upgrade the connection to secure
